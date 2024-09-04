@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=3 uid="uid://q3i8ftcno8mn"]
+
+[ext_resource type="Texture2D" uid="uid://cj78y2g4ctx2l" path="res://assets/tennisTransparent.png" id="1_axy2k"]
+[ext_resource type="Script" path="res://scenes/ball.gd" id="1_eur80"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_v1rs1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_axy2k")
+}],
+"loop": true,
+"name": &"ball",
+"speed": 5.0
+}]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_2lqkk"]
+
+[node name="ball" type="Area3D"]
+transform = Transform3D(0.0623804, 0, 0, 0, 0.0623804, 0, 0, 0, 0.0623804, 0, 0, 0)
+script = ExtResource("1_eur80")
+
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="."]
+transform = Transform3D(0.301576, 0, 0, 0, 0.301576, 0, 0, 0, 0.301576, -0.0155065, 0.0546446, -0.0170782)
+billboard = 2
+sprite_frames = SubResource("SpriteFrames_v1rs1")
+animation = &"ball"
+
+[node name="RayCast3D" type="RayCast3D" parent="."]
+target_position = Vector3(0, 0, 1)
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1.47672, 0, 0, 0, 1.47672, 0, 0, 0, 1.47672, 0, 0, 0)
+shape = SubResource("SphereShape3D_2lqkk")

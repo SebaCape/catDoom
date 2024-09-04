@@ -1,0 +1,146 @@
+[gd_scene load_steps=10 format=3 uid="uid://bprlccv4alv5g"]
+
+[ext_resource type="Script" path="res://Player.gd" id="1_mvq7r"]
+[ext_resource type="Texture2D" uid="uid://wdyx07lplkdb" path="res://assets/Paw1.png" id="2_5me5o"]
+[ext_resource type="Texture2D" uid="uid://mpyqcjulh2tb" path="res://assets/Paw2.png" id="3_td7h8"]
+[ext_resource type="Texture2D" uid="uid://bbgjdhb6v1pr1" path="res://assets/Paw3.png" id="4_dgexy"]
+[ext_resource type="AudioStream" uid="uid://ul204uljkx2n" path="res://assets/funny-meow-110120.mp3" id="5_jmlx8"]
+[ext_resource type="AudioStream" uid="uid://cgq6rxg3vl3kw" path="res://assets/man-death-scream-186763.mp3" id="6_lf64y"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_dhtv7"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_5me5o")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_td7h8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_dgexy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_td7h8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_5me5o")
+}],
+"loop": false,
+"name": &"shoot",
+"speed": 8.0
+}]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_hqwn6"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bqen4"]
+
+[node name="Player" type="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.59615, 0)
+collision_layer = 2
+collision_mask = 3
+script = ExtResource("1_mvq7r")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.5, 0)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="GunBase" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -40.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CanvasLayer/GunBase"]
+position = Vector2(332, -196)
+scale = Vector2(0.495732, 0.451288)
+sprite_frames = SubResource("SpriteFrames_dhtv7")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="Crosshair" type="ColorRect" parent="CanvasLayer"]
+z_as_relative = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -6.0
+offset_top = -6.0
+offset_right = 6.0
+offset_bottom = 6.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+color = Color(1, 1, 1, 0.298039)
+
+[node name="DeathScreen" type="Control" parent="."]
+visible = false
+texture_filter = 1
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -156.0
+offset_top = -144.0
+offset_right = -116.0
+offset_bottom = -104.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(7.12, 6.6)
+
+[node name="Label" type="Label" parent="DeathScreen"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -68.5056
+offset_top = -6.81819
+offset_right = 68.4944
+offset_bottom = 42.1818
+grow_horizontal = 2
+text = "Press R to Restart"
+
+[node name="ShootSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_jmlx8")
+max_polyphony = 3
+bus = &"SFX"
+
+[node name="DeathSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_lf64y")
+max_polyphony = 2
+bus = &"SFX"
+
+[node name="Marker3D" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.151099, 0.491264, 1.39307)
+
+[node name="SpotLight3D" type="SpotLight3D" parent="."]
+transform = Transform3D(0.99995, -0.000164881, 0.0099643, 0, -0.999863, -0.0165449, 0.00996567, 0.0165441, -0.999813, 0, 0, -3.5232)
+light_color = Color(0.85098, 0.00784314, 0.490196, 1)
+light_energy = 15.0
+light_indirect_energy = 15.0
+spot_range = 35.0567
+spot_angle = 32.7125
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_hqwn6")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("BoxShape3D_bqen4")

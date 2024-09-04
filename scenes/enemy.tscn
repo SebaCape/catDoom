@@ -1,0 +1,36 @@
+[gd_scene load_steps=6 format=3 uid="uid://vu45pioykxed"]
+
+[ext_resource type="Texture2D" uid="uid://gykyoa0juqr2" path="res://assets/GodotDog.png" id="1_02wax"]
+[ext_resource type="Script" path="res://enemy.gd" id="1_cusoc"]
+[ext_resource type="AudioStream" uid="uid://drj5xxyeyfbno" path="res://assets/dog-bark-179915.mp3" id="3_4pxyd"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_6bq3h"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_yieo4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_02wax")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Enemy" type="CharacterBody3D"]
+collision_layer = 2
+collision_mask = 3
+script = ExtResource("1_cusoc")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1.35, 0, 0, 0, 1.35, 0, 0, 0, 1.35, 0, 1.30447, 0)
+shape = SubResource("CapsuleShape3D_6bq3h")
+
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="."]
+transform = Transform3D(0.156396, 0, 0, 0, 0.289936, 0, 0, 0, 0.25, 0, 1.38047, 0)
+billboard = 2
+sprite_frames = SubResource("SpriteFrames_yieo4")
+autoplay = "default"
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("3_4pxyd")
